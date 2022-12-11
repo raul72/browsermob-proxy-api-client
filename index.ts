@@ -1,4 +1,5 @@
 import http from 'http';
+import { ProxyList } from './typings/proxy';
 
 export default class BMPClient {
   readonly host;
@@ -37,6 +38,7 @@ export default class BMPClient {
           resolve(data.join());
         });
       });
+
       req.on('error', error => reject(error));
 
       if (hasPostData) {
@@ -49,7 +51,10 @@ export default class BMPClient {
     });
   }
 
-  async getProxyList() {
+  /***
+   * Get a list of ports attached to ProxyServer instances managed by ProxyManager
+   */
+  async getProxyList(): Promise<ProxyList> {
     return JSON.parse(await this.httpRequest('/proxy', 'GET'));
   }
 
