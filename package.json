@@ -9,6 +9,7 @@
     "eslint": "eslint --cache --ext .ts ."
   },
   "devDependencies": {
+    "@microsoft/eslint-formatter-sarif": "2.1.7",
     "@types/node": "^16",
     "@typescript-eslint/eslint-plugin": "^5.46.0",
     "@typescript-eslint/parser": "^5.46.0",
