@@ -8,6 +8,11 @@
     "build": "tsc",
     "eslint": "eslint --cache --ext .ts ."
   },
+  "homepage": "https://github.com/raul72/browsermob-proxy-api-client/",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:raul72/browsermob-proxy-api-client.git"
+  },
   "devDependencies": {
     "@microsoft/eslint-formatter-sarif": "2.1.7",
     "@types/node": "^16",
