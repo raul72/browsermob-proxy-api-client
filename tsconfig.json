@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
+    // https://github.com/microsoft/TypeScript/wiki/Node-Target-Mapping#node-16
+    "target": "ES2021",
+    "lib": ["ES2021"],
     "outDir": "./dist",
     "strict": true,
     "declaration": true,
