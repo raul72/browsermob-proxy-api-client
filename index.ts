@@ -18,7 +18,7 @@ export default class BMPClient {
     this.port = port;
   }
 
-  private httpRequest(
+  protected httpRequest(
     options: RequestOptions,
     payload = '',
   ): Promise<string> {
@@ -47,7 +47,7 @@ export default class BMPClient {
     });
   }
 
-  private httpRequestWithArgs(
+  protected httpRequestWithArgs(
     path = '/',
     method: Method = Method.GET,
     args: Record<string, string | number | boolean> = {},
