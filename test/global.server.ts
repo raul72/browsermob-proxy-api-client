@@ -24,6 +24,24 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  if (req.url === '/auth') {
+    const header = req.headers.authorization || '';
+    const token = header.split(/\s+/).pop() || '';
+    const auth = Buffer.from(token, 'base64').toString();
+    const parts = auth.split(/:/);
+    const username = parts.shift();
+    const password = parts.join(':');
+
+    if (username !== 'user' && password !== 'test') {
+      res.statusCode = 401;
+      res.end('Unauthorized');
+    } else {
+      res.statusCode = 200;
+      res.end('OK');
+    }
+    return;
+  }
+
   res.statusCode = 404;
   res.end('Not Found');
 });
