@@ -8,6 +8,9 @@
     "build": "tsc",
     "eslint": "eslint --cache --ext .ts ."
   },
+  "engines": {
+    "node": ">=16"
+  },
   "homepage": "https://github.com/raul72/browsermob-proxy-api-client/",
   "repository": {
     "type": "git",
