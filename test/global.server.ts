@@ -17,10 +17,34 @@ export const PROXY_API_HOST = env.PROXY_API_HOST || PROXY_HOST;
 // BMP_PORT
 export const PROXY_API_PORT = Number(env.PROXY_API_PORT) || 8080;
 
+export const base64png = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAMSURBVBhXY/j//z8ABf4C/qc1gYQAAAAASUVORK5CYII=';
+
 const server = http.createServer((req, res) => {
   if (req.url === '/') {
-    res.statusCode = 200;
+    res.writeHead(200, {
+      'content-type': 'text/plain',
+    });
     res.end('OK');
+    return;
+  }
+
+  if (req.url === '/px.png') {
+    res.writeHead(200, {
+      'content-type': 'image/png',
+    });
+    res.end(Buffer.from(
+      base64png,
+      'base64',
+    ).toString());
+    return;
+  }
+
+  if (req.url === '/cookie') {
+    res.writeHead(200, {
+      'Set-Cookie': 'servercookie=servercookievalue',
+    });
+    res.statusCode = 200;
+    res.end(JSON.stringify(req.headers.cookie));
     return;
   }
 
