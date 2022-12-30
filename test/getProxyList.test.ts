@@ -9,14 +9,18 @@ describe('getProxyList', () => {
 
     expect(port).toBeGreaterThan(0);
 
-    const list = await API.getProxyList();
+    try {
+      const list = await API.getProxyList();
 
-    expect(list).toMatchObject({
-      proxyList: expect.arrayContaining([
-        expect.objectContaining({ port }),
-      ]),
-    });
-
-    await API.stop(Number(port));
+      expect(list).toMatchObject({
+        proxyList: expect.arrayContaining([
+          expect.objectContaining({ port }),
+        ]),
+      });
+    } catch (e) {
+      throw e;
+    } finally {
+      await API.stop(Number(port));
+    }
   });
 });

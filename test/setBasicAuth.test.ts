@@ -9,26 +9,30 @@ describe('setBasicAuth', () => {
 
     expect(port).toBeGreaterThan(0);
 
-    const before = await proxyRequest({
-      port: Number(port),
-      path: '/auth',
-    });
+    try {
+      const before = await proxyRequest({
+        port: Number(port),
+        path: '/auth',
+      });
 
-    expect(before.res.statusCode).toBe(401);
+      expect(before.res.statusCode).toBe(401);
 
-    before.req.destroy();
+      before.req.destroy();
 
-    await API.setBasicAuth(Number(port), TEST_SERVER_HOST_FOR_PROXY, 'user', 'test');
+      await API.setBasicAuth(Number(port), TEST_SERVER_HOST_FOR_PROXY, 'user', 'test');
 
-    const after = await proxyRequest({
-      port: Number(port),
-      path: '/auth',
-    });
+      const after = await proxyRequest({
+        port: Number(port),
+        path: '/auth',
+      });
 
-    expect(after.res.statusCode).toBe(200);
+      expect(after.res.statusCode).toBe(200);
 
-    after.req.destroy();
-
-    await API.stop(Number(port));
+      after.req.destroy();
+    } catch (e) {
+      throw e;
+    } finally {
+      await API.stop(Number(port));
+    }
   });
 });
