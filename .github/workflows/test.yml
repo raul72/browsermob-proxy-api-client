@@ -1,0 +1,61 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# ESLint is a tool for identifying and reporting on patterns
+# found in ECMAScript/JavaScript code.
+# More details at https://github.com/eslint/eslint
+# and https://eslint.org
+
+name: Jest
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ "master" ]
+
+jobs:
+  jest:
+    name: Run jest tests
+    runs-on: ubuntu-latest
+    container:
+      image: node:16
+      ports:
+        - 9000:9000
+      options: --name test --hostname test
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
+
+    services:
+      proxy:
+        image: raul72/browsermob-proxy
+        env:
+          BMP_PROXY_PORT_RANGE: "8581-8591"
+        ports:
+          - 8080:8080
+          - 8551-8591:8551-8591
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: |
+          yarn
+
+      - name: Run Jest
+        run: yarn test
+        continue-on-error: true
+        env:
+          TEST_SERVER_HOST_FOR_PROXY: test
+          PROXY_HOST: proxy
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage/clover.xml
