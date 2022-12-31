@@ -3,7 +3,7 @@ import http, { ClientRequest, IncomingMessage, RequestOptions } from 'http';
 const env = process.env;
 
 // port where unit tests HTTP server is running
-const TEST_SERVER_PORT = Number(env.TEST_SERVER_PORT) || 9000;
+export const TEST_SERVER_PORT = Number(env.TEST_SERVER_PORT) || 9000;
 // hostname how proxy server sees unit tests server
 // if you are running tests in host machine and proxy in docker use "host.docker.internal"
 // if you are running both in docker use hostname where unit tests server is running
