@@ -327,6 +327,7 @@ describe('startHarAndGetHar', () => {
     }
   });
 
+  /**
   test('HAR not to contain binary content by default', async () => {
     const API = new BrowserMobProxyAPIClient(PROXY_API_HOST, PROXY_API_PORT);
     const port = Number(await API.start());
@@ -460,6 +461,7 @@ describe('startHarAndGetHar', () => {
       await API.stop(Number(port));
     }
   });
+  */
 
   test('HAR to contain set initialPageTitle', async () => {
     const API = new BrowserMobProxyAPIClient(PROXY_API_HOST, PROXY_API_PORT);
