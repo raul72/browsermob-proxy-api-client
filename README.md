@@ -8,6 +8,7 @@ Refer to [REST API] section of BrowserMob Proxy documentation for detailed infor
 [![npm bundle size](https://img.shields.io/bundlephobia/minzip/browsermob-proxy-api-client?style=flat-square)](https://bundlephobia.com/package/browsermob-proxy-api-client@latest)
 [![npm downloads](https://img.shields.io/npm/dm/browsermob-proxy-api-client.svg?style=flat-square)](https://npm-stat.com/charts.html?package=browsermob-proxy-api-client)
 [![Known Vulnerabilities](https://snyk.io/test/npm/browsermob-proxy-api-client/badge.svg?style=flat-square)](https://snyk.io/test/npm/browsermob-proxy-api-client)
+[![Coverage](https://img.shields.io/codecov/c/github/raul72/browsermob-proxy-api-client?style=flat-square)](https://app.codecov.io/gh/raul72/browsermob-proxy-api-client)
 
 ## Installing
 
