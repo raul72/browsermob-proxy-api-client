@@ -48,7 +48,7 @@ export default class BrowserMobProxyAPIClient {
           const data: string[] = [];
           res.on('data', chunk => data.push(chunk));
           res.on('end', () => {
-            resolve(data.join());
+            resolve(data.join(''));
           });
         });
 
