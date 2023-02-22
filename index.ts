@@ -23,6 +23,22 @@ enum Method {
   DELETE = 'DELETE',
 }
 
+export {
+  BandwidthLimitsResponse,
+  BlacklistItem,
+  NewHarPageArgs,
+  ProxyList,
+  SetBandwidthLimitArgs,
+  SetBlacklistArgs,
+  SetRetryCountArgs,
+  SetRewriteArgs,
+  SetTimeoutsArgs,
+  SetWhitelistArgs,
+  StartHarArgs,
+  StartProxyArgs,
+  WaitArgs,
+};
+
 export default class BrowserMobProxyAPIClient {
   readonly host;
 
