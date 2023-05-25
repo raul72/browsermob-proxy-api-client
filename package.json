@@ -23,7 +23,7 @@
     "@jest/globals": "^29.3.1",
     "@microsoft/eslint-formatter-sarif": "2.1.7",
     "@tsconfig/node16": "^1.0.3",
-    "@types/node": "^16",
+    "@types/node": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^5.46.0",
     "@typescript-eslint/parser": "^5.46.0",
     "eslint": "^8.29.0",
