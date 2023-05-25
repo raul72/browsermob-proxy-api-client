@@ -6,7 +6,7 @@
   "labels": ["dependencies"],
   "packageRules": [
     {
-      "packageNames": ["node"],
+      "packageNames": ["node", "@types/node"],
       "enabled": false
     }
   ]
