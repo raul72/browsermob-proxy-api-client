@@ -8,6 +8,10 @@
     {
       "packageNames": ["node", "@types/node"],
       "enabled": false
+    },
+    {
+      "matchDatasources": ["npm"],
+      "minimumReleaseAge": "5 days"
     }
   ]
 }
