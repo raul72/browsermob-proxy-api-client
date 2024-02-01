@@ -55,6 +55,9 @@ jobs:
           TEST_SERVER_HOST_FOR_PROXY: test
           PROXY_HOST: proxy
 
+      - name: LDD version
+        run:  ldd --version
+
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         with:
