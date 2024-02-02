@@ -58,6 +58,9 @@ jobs:
       - name: LDD version
         run:  ldd --version
 
+      - name: ls
+        run:  ls -la ./coverage
+
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         with:
