@@ -6,6 +6,8 @@ services:
     ports:
       - 8080:8080
       - 8081-8181:8081-8181
+    environment:
+      BMP_PROXY_PORT_RANGE: 8081-8181
   # docker-compose --profile test up --abort-on-container-exit
   test:
     image: node:18-alpine
