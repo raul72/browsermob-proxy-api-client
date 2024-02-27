@@ -6,7 +6,7 @@
     ":semanticCommitTypeAll(chore)",
     ":semanticCommitScopeDisabled"
   ],
-  "labels": ["dependencies"],
+  "labels": ["chore", "dependencies"],
   "packageRules": [
     {
       "packageNames": ["node", "@types/node"],
