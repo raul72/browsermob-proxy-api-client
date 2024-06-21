@@ -1,4 +1,4 @@
-import http, { RequestOptions } from 'http';
+import http, { ClientRequest, IncomingMessage, RequestOptions } from 'http';
 import { Har } from 'har-format';
 import {
   BandwidthLimitsResponse,
@@ -21,6 +21,12 @@ enum Method {
   POST = 'POST',
   PUT = 'PUT',
   DELETE = 'DELETE',
+}
+
+interface HttpRequestResponse {
+  req: ClientRequest;
+  res: IncomingMessage;
+  data: string;
 }
 
 export {
@@ -52,7 +58,7 @@ export default class BrowserMobProxyAPIClient {
   protected httpRequest(
     options: RequestOptions,
     payload = '',
-  ): Promise<string> {
+  ): Promise<HttpRequestResponse> {
     return new Promise((resolve, reject) => {
       const req = http.request(
         {
@@ -64,7 +70,11 @@ export default class BrowserMobProxyAPIClient {
           const data: string[] = [];
           res.on('data', chunk => data.push(chunk));
           res.on('end', () => {
-            resolve(data.join(''));
+            resolve({
+              req,
+              res,
+              data: data.join(''),
+            });
           });
         });
 
@@ -82,7 +92,7 @@ export default class BrowserMobProxyAPIClient {
     path = '/',
     method: Method = Method.GET,
     args: Record<string, string | number | boolean> = {},
-  ): Promise<string> {
+  ): Promise<HttpRequestResponse> {
     const headers: Record<string, string> = {};
     const params = new URLSearchParams();
 
@@ -105,7 +115,8 @@ export default class BrowserMobProxyAPIClient {
    * Get a list of ports attached to ProxyServer instances managed by ProxyManager
    */
   async getProxyList(): Promise<ProxyList> {
-    return JSON.parse(await this.httpRequestWithArgs('/proxy', Method.GET));
+    const res = await this.httpRequestWithArgs('/proxy', Method.GET);
+    return JSON.parse(res.data);
   }
 
   /**
@@ -117,7 +128,7 @@ export default class BrowserMobProxyAPIClient {
       Method.POST,
       { ...args },
     );
-    const { port } = JSON.parse(res);
+    const { port } = JSON.parse(res.data);
     return port || null;
   }
 
@@ -134,7 +145,7 @@ export default class BrowserMobProxyAPIClient {
    */
   async startHar(port: number, args: StartHarArgs = {}): Promise<Har | undefined> {
     const res = await this.httpRequestWithArgs(`/proxy/${port}/har`, Method.PUT, { ...args });
-    return res ? JSON.parse(res) : undefined;
+    return res.data ? JSON.parse(res.data) : undefined;
   }
 
   /**
@@ -150,14 +161,15 @@ export default class BrowserMobProxyAPIClient {
    */
   async getHar(port: number): Promise<Har | undefined> {
     const res = await this.httpRequestWithArgs(`/proxy/${port}/har`, Method.GET);
-    return res ? JSON.parse(res) : undefined;
+    return res.data ? JSON.parse(res.data) : undefined;
   }
 
   /**
    * Get whitelisted items
    */
   async getWhitelist(port: number): Promise<string[]> {
-    return JSON.parse(await this.httpRequestWithArgs(`/proxy/${port}/whitelist`, Method.GET));
+    const res = await this.httpRequestWithArgs(`/proxy/${port}/whitelist`, Method.GET);
+    return JSON.parse(res.data);
   }
 
   /**
@@ -178,7 +190,8 @@ export default class BrowserMobProxyAPIClient {
    * Get blacklisted items
    */
   async getBlacklist(port: number): Promise<BlacklistItem[]> {
-    return JSON.parse(await this.httpRequestWithArgs(`/proxy/${port}/blacklist`, Method.GET));
+    const res = await this.httpRequestWithArgs(`/proxy/${port}/blacklist`, Method.GET);
+    return JSON.parse(res.data);
   }
 
   /**
@@ -206,7 +219,8 @@ export default class BrowserMobProxyAPIClient {
    * Displays the amount of data remaining to be uploaded/downloaded until the limit is reached
    */
   async getBandwidthLimit(port: number): Promise<BandwidthLimitsResponse> {
-    return JSON.parse(await this.httpRequestWithArgs(`/proxy/${port}/limit`, Method.GET));
+    const res = await this.httpRequestWithArgs(`/proxy/${port}/limit`, Method.GET);
+    return JSON.parse(res.data);
   }
 
   /**
@@ -263,7 +277,8 @@ export default class BrowserMobProxyAPIClient {
    * Wait till all request are being made
    */
   async wait(port: number, args: WaitArgs): Promise<unknown> {
-    return this.httpRequestWithArgs(`/proxy/${port}/wait`, Method.PUT, { ...args });
+    const res = await this.httpRequestWithArgs(`/proxy/${port}/wait`, Method.PUT, { ...args });
+    return res.data;
   }
 
   /**
