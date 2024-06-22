@@ -18,7 +18,7 @@ export default class HttpRequest {
 
   protected overwriteOptions: RequestOptions = {};
 
-  protected httpRequest(
+  protected async httpRequest(
     options: RequestOptions,
     payload = '',
   ): Promise<HttpRequestResponse> {
@@ -51,7 +51,7 @@ export default class HttpRequest {
     });
   }
 
-  protected httpRequestWithArgs(
+  protected async httpRequestWithArgs(
     path = '/',
     method: Method = Method.GET,
     args: Record<string, string | number | boolean> = {},

@@ -1,5 +1,9 @@
+import { RequestOptions } from 'http';
 import { Har } from 'har-format';
-import HttpRequest, { Method } from './httpRequest';
+
+import BMPError from './BMPError';
+import HttpRequest, { HttpRequestResponse, Method } from './httpRequest';
+
 import {
   BandwidthLimitsResponse,
   BlacklistItem,
@@ -19,6 +23,7 @@ import {
 export {
   BandwidthLimitsResponse,
   BlacklistItem,
+  BMPError,
   NewHarPageArgs,
   ProxyList,
   SetBandwidthLimitArgs,
@@ -39,6 +44,24 @@ export default class BrowserMobProxyAPIClient extends HttpRequest {
       host,
       port,
     };
+  }
+
+  protected async httpRequest(
+    options: RequestOptions,
+    payload = '',
+  ): Promise<HttpRequestResponse> {
+    const ret = await super.httpRequest(options, payload);
+
+    const statusCode = ret.res.statusCode || 0;
+
+    if (statusCode < 200 || statusCode >= 400) {
+      throw new BMPError(
+        `Invalid API response code ${ret.res.statusCode}${options.path ? ` on ${options.path}` : ''}`,
+        ret,
+      );
+    }
+
+    return ret;
   }
 
   /***
