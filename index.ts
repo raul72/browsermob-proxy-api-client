@@ -1,5 +1,6 @@
-import http, { ClientRequest, IncomingMessage, RequestOptions } from 'http';
+import { RequestOptions } from 'http';
 import { Har } from 'har-format';
+import HttpRequest, { HttpRequestResponse, Method } from './httpRequest';
 import {
   BandwidthLimitsResponse,
   BlacklistItem,
@@ -15,19 +16,6 @@ import {
   StartProxyArgs,
   WaitArgs,
 } from './typings/proxy';
-
-enum Method {
-  GET = 'GET',
-  POST = 'POST',
-  PUT = 'PUT',
-  DELETE = 'DELETE',
-}
-
-interface HttpRequestResponse {
-  req: ClientRequest;
-  res: IncomingMessage;
-  data: string;
-}
 
 export {
   BandwidthLimitsResponse,
@@ -45,12 +33,13 @@ export {
   WaitArgs,
 };
 
-export default class BrowserMobProxyAPIClient {
+export default class BrowserMobProxyAPIClient extends HttpRequest {
   readonly host;
 
   readonly port;
 
   constructor(host = 'localhost', port = 8080) {
+    super();
     this.host = host;
     this.port = port;
   }
@@ -59,55 +48,13 @@ export default class BrowserMobProxyAPIClient {
     options: RequestOptions,
     payload = '',
   ): Promise<HttpRequestResponse> {
-    return new Promise((resolve, reject) => {
-      const req = http.request(
-        {
-          host: this.host,
-          port: this.port,
-          ...options,
-        },
-        res => {
-          const data: string[] = [];
-          res.on('data', chunk => data.push(chunk));
-          res.on('end', () => {
-            resolve({
-              req,
-              res,
-              data: data.join(''),
-            });
-          });
-        });
-
-      req.on('error', error => reject(error));
-
-      if (payload) {
-        req.write(payload);
-      }
-
-      req.end();
-    });
-  }
-
-  protected httpRequestWithArgs(
-    path = '/',
-    method: Method = Method.GET,
-    args: Record<string, string | number | boolean> = {},
-  ): Promise<HttpRequestResponse> {
-    const headers: Record<string, string> = {};
-    const params = new URLSearchParams();
-
-    if ([Method.POST, Method.PUT].includes(method) && Object.entries(args).length) {
-      headers['Content-Type'] = 'application/x-www-form-urlencoded';
-      Object.entries(args).forEach(arg => params.set(arg[0], String(arg[1])));
-    }
-
-    return this.httpRequest(
+    return super.httpRequest(
       {
-        path,
-        method,
-        headers,
+        ...options,
+        host: this.host,
+        port: this.port,
       },
-      params.toString(),
+      payload,
     );
   }
 
