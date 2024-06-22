@@ -14,6 +14,10 @@ export interface HttpRequestResponse {
 }
 
 export default class HttpRequest {
+  protected defaultOptions: RequestOptions = {};
+
+  protected overwriteOptions: RequestOptions = {};
+
   protected httpRequest(
     options: RequestOptions,
     payload = '',
@@ -21,7 +25,9 @@ export default class HttpRequest {
     return new Promise((resolve, reject) => {
       const req = http.request(
         {
+          ...this.defaultOptions,
           ...options,
+          ...this.overwriteOptions,
         },
         res => {
           const data: string[] = [];

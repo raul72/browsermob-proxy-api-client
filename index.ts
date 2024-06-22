@@ -1,6 +1,5 @@
-import { RequestOptions } from 'http';
 import { Har } from 'har-format';
-import HttpRequest, { HttpRequestResponse, Method } from './httpRequest';
+import HttpRequest, { Method } from './httpRequest';
 import {
   BandwidthLimitsResponse,
   BlacklistItem,
@@ -34,28 +33,12 @@ export {
 };
 
 export default class BrowserMobProxyAPIClient extends HttpRequest {
-  readonly host;
-
-  readonly port;
-
   constructor(host = 'localhost', port = 8080) {
     super();
-    this.host = host;
-    this.port = port;
-  }
-
-  protected httpRequest(
-    options: RequestOptions,
-    payload = '',
-  ): Promise<HttpRequestResponse> {
-    return super.httpRequest(
-      {
-        ...options,
-        host: this.host,
-        port: this.port,
-      },
-      payload,
-    );
+    this.defaultOptions = {
+      host,
+      port,
+    };
   }
 
   /***
