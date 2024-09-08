@@ -40,6 +40,8 @@ jobs:
           - 8080:8080
           - 8551-8591:8551-8591
 
+    continue-on-error: true
+
     steps:
       - name: Checkout code
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
@@ -50,7 +52,6 @@ jobs:
 
       - name: Run Jest
         run: yarn test
-        continue-on-error: true
         env:
           TEST_SERVER_HOST_FOR_PROXY: test
           PROXY_HOST: proxy
