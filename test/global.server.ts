@@ -1,4 +1,5 @@
-import http, { ClientRequest, IncomingMessage, RequestOptions } from 'http';
+import http, { RequestOptions } from 'http';
+import HttpRequest, { HttpRequestResponse } from '../httpRequest';
 
 const env = process.env;
 
@@ -85,24 +86,25 @@ export const stop = (): void => {
   server.close();
 };
 
-export const proxyRequest = (
+class ProxyHttpRequest extends HttpRequest {
+  public proxyRequest(options: RequestOptions, payload: string = ''): Promise<HttpRequestResponse> {
+    return super.httpRequest(
+      {
+        host: PROXY_HOST,
+        ...options,
+        path: `http://${TEST_SERVER_HOST_FOR_PROXY}:${TEST_SERVER_PORT}${options.path}`,
+      },
+      payload,
+    );
+  }
+}
+
+const proxyClient = new ProxyHttpRequest();
+
+export const proxyRequest = async (
   options: RequestOptions,
   payload = '',
-): Promise<{ req: ClientRequest, res: IncomingMessage }> => new Promise((resolve, reject) => {
-  const req = http.request(
-    {
-      host: PROXY_HOST,
-      ...options,
-      path: `http://${TEST_SERVER_HOST_FOR_PROXY}:${TEST_SERVER_PORT}${options.path}`,
-    },
-    res => {
-      resolve({ req, res });
-    },
-  );
-  if (payload) {
-    req.write(payload);
-  }
-  req.on('error', error => reject(error));
-  req.end();
-});
+): Promise<HttpRequestResponse> => {
+  return proxyClient.proxyRequest(options, payload);
+};
 
