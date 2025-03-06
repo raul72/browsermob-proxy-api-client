@@ -1,5 +1,6 @@
 import { afterAll, beforeAll, describe, expect, test } from '@jest/globals';
 import {
+  INVALID_PORT_FOR_TEST,
   PROXY_API_HOST,
   PROXY_API_PORT,
   proxyRequest,
@@ -7,6 +8,7 @@ import {
   TEST_SERVER_PORT,
 } from './global.server';
 import BrowserMobProxyAPIClient from '../index';
+import BMPError from '../BMPError';
 
 const API = new BrowserMobProxyAPIClient(PROXY_API_HOST, PROXY_API_PORT);
 let port: number;
@@ -26,6 +28,12 @@ afterAll(async () => {
 describe('blacklist', () => {
   test('should have valid proxy port', async () => {
     expect(port).toBeGreaterThan(0);
+  });
+
+  test('should throw error for invalid port', async () => {
+    await expect(API.getBlacklist(INVALID_PORT_FOR_TEST))
+      .rejects
+      .toThrow(BMPError);
   });
 
   test('should have empty blacklist by default', async () => {

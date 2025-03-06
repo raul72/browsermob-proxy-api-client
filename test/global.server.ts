@@ -18,6 +18,8 @@ export const PROXY_API_HOST = env.PROXY_API_HOST || PROXY_HOST;
 // BMP_PORT
 export const PROXY_API_PORT = Number(env.PROXY_API_PORT) || 8080;
 
+export const INVALID_PORT_FOR_TEST = Number(env.INVALID_PORT_FOR_TEST) || 8888;
+
 export const base64png = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAMSURBVBhXY/j//z8ABf4C/qc1gYQAAAAASUVORK5CYII=';
 
 const server = http.createServer((req, res) => {
