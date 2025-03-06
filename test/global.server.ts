@@ -1,4 +1,5 @@
-import http, { ClientRequest, IncomingMessage, RequestOptions } from 'http';
+import http, { RequestOptions } from 'http';
+import HttpRequest, { HttpRequestResponse } from '../httpRequest';
 
 const env = process.env;
 
@@ -16,6 +17,8 @@ const PROXY_HOST = env.PROXY_HOST || 'localhost';
 export const PROXY_API_HOST = env.PROXY_API_HOST || PROXY_HOST;
 // BMP_PORT
 export const PROXY_API_PORT = Number(env.PROXY_API_PORT) || 8080;
+
+export const INVALID_PORT_FOR_TEST = Number(env.INVALID_PORT_FOR_TEST) || 8888;
 
 export const base64png = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAMSURBVBhXY/j//z8ABf4C/qc1gYQAAAAASUVORK5CYII=';
 
@@ -85,24 +88,25 @@ export const stop = (): void => {
   server.close();
 };
 
-export const proxyRequest = (
+class ProxyHttpRequest extends HttpRequest {
+  public proxyRequest(options: RequestOptions, payload: string = ''): Promise<HttpRequestResponse> {
+    return super.httpRequest(
+      {
+        host: PROXY_HOST,
+        ...options,
+        path: `http://${TEST_SERVER_HOST_FOR_PROXY}:${TEST_SERVER_PORT}${options.path}`,
+      },
+      payload,
+    );
+  }
+}
+
+const proxyClient = new ProxyHttpRequest();
+
+export const proxyRequest = async (
   options: RequestOptions,
   payload = '',
-): Promise<{ req: ClientRequest, res: IncomingMessage }> => new Promise((resolve, reject) => {
-  const req = http.request(
-    {
-      host: PROXY_HOST,
-      ...options,
-      path: `http://${TEST_SERVER_HOST_FOR_PROXY}:${TEST_SERVER_PORT}${options.path}`,
-    },
-    res => {
-      resolve({ req, res });
-    },
-  );
-  if (payload) {
-    req.write(payload);
-  }
-  req.on('error', error => reject(error));
-  req.end();
-});
+): Promise<HttpRequestResponse> => {
+  return proxyClient.proxyRequest(options, payload);
+};
 
