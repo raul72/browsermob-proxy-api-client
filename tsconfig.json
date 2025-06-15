@@ -5,6 +5,7 @@
     "declaration": true,
     "sourceMap": true,
     "experimentalDecorators": true,
+    "isolatedModules": true,
     "typeRoots": [
       "./node_modules/@types"
     ]
