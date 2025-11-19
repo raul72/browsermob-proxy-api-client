@@ -750,9 +750,9 @@
   integrity sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==
 
 "@tsconfig/node18@^18":
-  version "18.2.4"
-  resolved "https://registry.yarnpkg.com/@tsconfig/node18/-/node18-18.2.4.tgz#094efbdd70f697d37c09f34067bf41bc4a828ae3"
-  integrity sha512-5xxU8vVs9/FNcvm3gE07fPbn9tl6tqGGWA9tSlwsUEkBxtRnTsNmwrV8gasZ9F/EobaSv9+nu8AxUKccw77JpQ==
+  version "18.2.6"
+  resolved "https://registry.yarnpkg.com/@tsconfig/node18/-/node18-18.2.6.tgz#21c894382e89fb5b641303f9ea3bbc04beb7060d"
+  integrity sha512-eAWQzAjPj18tKnDzmWstz4OyWewLUNBm9tdoN9LayzoboRktYx3Enk1ZXPmThj55L7c4VWYq/Bzq0A51znZfhw==
 
 "@tybys/wasm-util@^0.10.0":
   version "0.10.1"
