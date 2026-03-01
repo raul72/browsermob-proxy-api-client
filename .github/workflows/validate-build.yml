@@ -20,7 +20,7 @@ jobs:
 
       # Sets up Node.js and restores Yarn's global package cache ( not node_modules ) based on hashes in yarn.lock
       - name: Setup Node.js + Yarn cache
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 20
           cache: 'yarn'
