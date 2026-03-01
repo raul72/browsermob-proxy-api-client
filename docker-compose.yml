@@ -8,6 +8,12 @@ services:
       - 8081-8181:8081-8181
     environment:
       BMP_PROXY_PORT_RANGE: 8081-8181
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-s", "http://localhost:8080/proxy"]
+      interval: 5s
+      timeout: 3s
+      retries: 6
+      start_period: 5s
   # docker-compose --profile test up --abort-on-container-exit
   test:
     image: node:18-alpine
@@ -19,7 +25,8 @@ services:
       PROXY_HOST: proxy
     command: ["yarn", "test"]
     depends_on:
-      - proxy
+      proxy:
+        condition: service_healthy
     profiles:
       - test
 
