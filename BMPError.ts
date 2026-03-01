@@ -7,6 +7,7 @@ interface BMPErrorRequest extends Pick<ClientRequest, 'host' | 'protocol' | 'met
   headers: OutgoingHttpHeaders;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface BMPErrorResponse
   extends Pick<IncomingMessage, 'complete' | 'headers' | 'rawHeaders' | 'method' | 'url' | 'statusCode' | 'statusMessage'> {
 }
