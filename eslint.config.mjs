@@ -27,6 +27,7 @@ export default tseslint.config(
           "@typescript-eslint/no-unused-vars": "error",
           "eqeqeq": ["error", "always"],
           "curly": "error",
+          "@typescript-eslint/no-empty-object-type": "off",
       },
   }
 );
