@@ -9,12 +9,21 @@
   "labels": ["chore", "dependencies"],
   "packageRules": [
     {
-      "packageNames": ["node", "@types/node"],
+      "matchManagers": ["github-actions"],
+      "matchDepTypes": ["node-version"],
+      "enabled": false
+    },
+    {
+      "packageNames": ["@types/node"],
       "enabled": false
     },
     {
       "matchDatasources": ["npm"],
       "minimumReleaseAge": "5 days"
+    },
+    {
+      "matchPackagePatterns": ["^@tsconfig/"],
+      "enabled": false
     }
   ]
 }
