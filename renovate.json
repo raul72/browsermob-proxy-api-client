@@ -9,16 +9,16 @@
   "labels": ["chore", "dependencies"],
   "packageRules": [
     {
-      "matchManagers": ["github-actions"],
-      "matchPackageNames": ["node"],
+      "matchManagers": ["github-actions", "docker-compose"],
+      "matchPackageNames": ["node", "actions/node-versions"],
       "enabled": false
     },
     {
-      "packageNames": ["@types/node"],
+      "matchPackageNames": ["@types/node"],
       "enabled": false
     },
     {
-      "matchPackagePatterns": ["^@tsconfig/"],
+      "matchPackagePatterns": ["/^@tsconfig/"],
       "enabled": false
     },
     {
