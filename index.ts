@@ -21,9 +21,12 @@ import {
 } from './typings/proxy';
 
 export {
+  BMPError,
+};
+
+export type {
   BandwidthLimitsResponse,
   BlacklistItem,
-  BMPError,
   NewHarPageArgs,
   ProxyList,
   SetBandwidthLimitArgs,
