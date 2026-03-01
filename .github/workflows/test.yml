@@ -58,7 +58,9 @@ jobs:
           yarn install --frozen-lockfile
 
       - name: Run Jest
-        run: yarn test
+        run: |
+          sleep 15
+          yarn test
         env:
           TEST_SERVER_HOST_FOR_PROXY: test
           PROXY_HOST: proxy
