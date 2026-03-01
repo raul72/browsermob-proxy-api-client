@@ -16,7 +16,7 @@ services:
       start_period: 5s
   # docker-compose --profile test up --abort-on-container-exit
   test:
-    image: node:18-alpine
+    image: node:24-alpine
     working_dir: /app
     volumes:
       - ./:/app
