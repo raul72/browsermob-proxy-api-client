@@ -10,7 +10,7 @@
   "packageRules": [
     {
       "matchManagers": ["github-actions"],
-      "matchDepTypes": ["node-version"],
+      "matchPackageNames": ["node"],
       "enabled": false
     },
     {
@@ -18,12 +18,12 @@
       "enabled": false
     },
     {
-      "matchDatasources": ["npm"],
-      "minimumReleaseAge": "5 days"
-    },
-    {
       "matchPackagePatterns": ["^@tsconfig/"],
       "enabled": false
+    },
+    {
+      "matchDatasources": ["npm"],
+      "minimumReleaseAge": "5 days"
     }
   ]
 }
