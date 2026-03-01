@@ -18,7 +18,7 @@
       "enabled": false
     },
     {
-      "matchPackagePatterns": ["/^@tsconfig/"],
+      "matchPackageNames": ["@tsconfig/*"],
       "enabled": false
     },
     {
