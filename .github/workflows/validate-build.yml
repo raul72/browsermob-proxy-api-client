@@ -18,6 +18,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
+      # Sets up Node.js and restores Yarn's global package cache ( not node_modules ) based on hashes in yarn.lock
+      - name: Setup Node.js + Yarn cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'yarn'
+
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
 
