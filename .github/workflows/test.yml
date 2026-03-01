@@ -22,7 +22,7 @@ jobs:
     name: Run jest tests
     runs-on: ubuntu-latest
     container:
-      image: node:18
+      image: node:20
       ports:
         - 9000:9000
       options: --name test --hostname test
@@ -50,7 +50,7 @@ jobs:
       - name: Setup Node.js + Yarn cache
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           cache: 'yarn'
 
       - name: Install Dependencies
