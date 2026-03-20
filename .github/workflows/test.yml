@@ -57,7 +57,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Wait for Browsermob Proxy
-        uses: nick-fields/retry@v3
+        uses: nick-fields/retry@v4
         with:
           timeout_minutes: 2
           max_attempts: 30
